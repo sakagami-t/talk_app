@@ -17,6 +17,12 @@ class Message {
 class MessageScreenState extends State<MessageScreen> {
   final List<Message> _messages = [];
   final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
@@ -24,6 +30,11 @@ class MessageScreenState extends State<MessageScreen> {
         _messages.add(Message(_controller.text));
         _controller.clear();
       });
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     }
   }
 
@@ -37,6 +48,7 @@ class MessageScreenState extends State<MessageScreen> {
         children: <Widget>[
           Expanded(
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return Row(
