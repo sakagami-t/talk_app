@@ -39,28 +39,32 @@ class MessageScreenState extends State<MessageScreen> {
             child: ListView.builder(
               itemCount: _messages.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[100],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        _messages[index].timestamp.toLocal().toString().split(' ')[1].substring(0, 5),
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                      Expanded(
-                        child: Text(
-                          _messages[index].text,
-                          textAlign: TextAlign.right,
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.blue[100],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            _messages[index].text,
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        Text(
+                          _messages[index].timestamp.toLocal().toString().split(' ')[1].substring(0, 5),
+                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
                 );
               },
             ),
