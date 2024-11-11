@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key});
+
   @override
-  _MessageScreenState createState() => _MessageScreenState();
+  MessageScreenState createState() => MessageScreenState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class MessageScreenState extends State<MessageScreen> {
   final List<String> _messages = [];
   final TextEditingController _controller = TextEditingController();
 
@@ -22,7 +24,7 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Message Screen'),
+        title: const Text('Message Screen'),
       ),
       body: Column(
         children: <Widget>[
@@ -43,14 +45,14 @@ class _MessageScreenState extends State<MessageScreen> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter message',
                     ),
                   ),
                 ),
                 FloatingActionButton(
                   onPressed: _sendMessage,
-                  child: Icon(Icons.send),
+                  child: const Icon(Icons.send),
                 ),
               ],
             ),
