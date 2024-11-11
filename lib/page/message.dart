@@ -42,11 +42,22 @@ class MessageScreenState extends State<MessageScreen> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Text(
+                          _messages[index]
+                              .timestamp
+                              .toLocal()
+                              .toString()
+                              .split(' ')[1]
+                              .substring(0, 5),
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.blue[100],
@@ -57,10 +68,6 @@ class MessageScreenState extends State<MessageScreen> {
                             textAlign: TextAlign.right,
                             style: const TextStyle(color: Colors.white),
                           ),
-                        ),
-                        Text(
-                          _messages[index].timestamp.toLocal().toString().split(' ')[1].substring(0, 5),
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -76,9 +83,7 @@ class MessageScreenState extends State<MessageScreen> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter message',
-                    ),
+                    decoration: const InputDecoration(),
                   ),
                 ),
                 FloatingActionButton(
