@@ -119,7 +119,6 @@ class MessageScreenState extends State<MessageScreen> {
       };
 
       try {
-        // 自分のメッセージをすぐに追加
         setState(() {
           _messages.add(Message(_controller.text));
           _controller.clear();
@@ -132,7 +131,6 @@ class MessageScreenState extends State<MessageScreen> {
         _channel!.sink.add(json.encode(message));
       } catch (e) {
         debugPrint('Error sending message: $e');
-        // エラーをユーザーに表示
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to send message')),
         );
@@ -150,7 +148,6 @@ class MessageScreenState extends State<MessageScreen> {
       appBar: AppBar(
         title: const Text('Message Screen'),
         actions: [
-          // 接続状態を表示するインジケーター
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(
@@ -170,36 +167,44 @@ class MessageScreenState extends State<MessageScreen> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          _messages[index]
-                              .timestamp
-                              .toLocal()
-                              .toString()
-                              .split(' ')[1]
-                              .substring(0, 5),
-                          style:
-                              const TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[100],
-                            borderRadius: BorderRadius.circular(10),
+                    Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            _messages[index]
+                                .timestamp
+                                .toLocal()
+                                .toString()
+                                .split(' ')[1]
+                                .substring(0, 5),
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.grey),
                           ),
-                          child: Text(
-                            _messages[index].text,
-                            textAlign: TextAlign.right,
-                            style: const TextStyle(color: Colors.white),
-                            maxLines: null,
-                            overflow: TextOverflow.visible,
+                          Flexible(
+                            child: Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width * 0.7,
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.blue[100],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                _messages[index].text,
+                                style: const TextStyle(color: Colors.black87),
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 );
@@ -213,12 +218,19 @@ class MessageScreenState extends State<MessageScreen> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: const InputDecoration(),
-                    // Enterキーでメッセージを送信
-                    onSubmitted: (_) => _sendMessage(),
                     maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
+                const SizedBox(width: 8),
                 FloatingActionButton(
                   onPressed: _sendMessage,
                   backgroundColor: _isConnected ? null : Colors.grey,
