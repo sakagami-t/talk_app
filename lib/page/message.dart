@@ -32,12 +32,14 @@ class MessageScreenState extends State<MessageScreen> {
     super.dispose();
   }
 
-  void _connectWebSocket() {
+  void _connectWebSocket() async {
     try {
       _channel = WebSocketChannel.connect(
         Uri.parse(
             'wss://buc0rvxhnh.execute-api.ap-northeast-1.amazonaws.com/prod'),
       );
+
+      await _channel!.ready;
 
       _channel!.stream.listen(
         (message) {
