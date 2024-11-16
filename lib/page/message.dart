@@ -195,6 +195,8 @@ class MessageScreenState extends State<MessageScreen> {
                             _messages[index].text,
                             textAlign: TextAlign.right,
                             style: const TextStyle(color: Colors.white),
+                            maxLines: null,
+                            overflow: TextOverflow.visible,
                           ),
                         ),
                       ],
@@ -214,6 +216,7 @@ class MessageScreenState extends State<MessageScreen> {
                     decoration: const InputDecoration(),
                     // Enterキーでメッセージを送信
                     onSubmitted: (_) => _sendMessage(),
+                    maxLines: null,
                   ),
                 ),
                 FloatingActionButton(
